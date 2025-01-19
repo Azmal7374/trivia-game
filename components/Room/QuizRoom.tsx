@@ -2,31 +2,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/order */
 /* eslint-disable prettier/prettier */
-import  { useEffect, useState } from 'react';
-import Quiz from './Quiz';
-import Chat from './Chat';
+import { useEffect, useState } from "react";
+import Quiz from "./Quiz";
+import Chat from "./Chat";
 
-interface QuizRoomProps { 
+interface QuizRoomProps {
   roomId: string;
   userName: string;
   quizCategory: string;
   onResetRoom: () => void;
 }
 
-const QuizRoom: React.FC<QuizRoomProps> = ({ roomId, quizCategory, onResetRoom }) => {
+const QuizRoom: React.FC<QuizRoomProps> = ({
+  roomId,
+  quizCategory,
+  onResetRoom,
+}) => {
   const [quizStarted, setQuizStarted] = useState(false);
- // eslint-disable-next-line padding-line-between-statements
+  // eslint-disable-next-line padding-line-between-statements
   const [username, setUsername] = useState("");
-   const [quizzes, setQuizzes] = useState<string[]>([]);
-   const [timer, setTimer] = useState("");
- 
- useEffect(() => {
-    // Retrieve user and room data from localStorage
-    const storedName = localStorage.getItem("username") || "Unknown User";
+  const [quizzes, setQuizzes] = useState<string[]>([]);
+  const [timer, setTimer] = useState("");
+
+  useEffect(() => {
+    // Retrieve user and room data from sessionStorage
+    const storedName = sessionStorage.getItem("username") || "Unknown User";
     // const storedQuizzes = JSON.parse(
-    //   localStorage.getItem("selectedQuizzes") || "[]"
+    //   sessionStorage.getItem("selectedQuizzes") || "[]"
     // );
-    const storedTimer = localStorage.getItem("roomTimer") || "No Timer Set";
+    const storedTimer = sessionStorage.getItem("roomTimer") || "No Timer Set";
 
     setUsername(storedName);
     // setRoomCode(storedRoomCode);
@@ -38,7 +42,7 @@ const QuizRoom: React.FC<QuizRoomProps> = ({ roomId, quizCategory, onResetRoom }
     <div>
       <h1>Quiz Room: {roomId}</h1>
       <p>Welcome, {username}!</p>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
           {quizStarted ? (
             <Quiz quizCategory={quizCategory} />

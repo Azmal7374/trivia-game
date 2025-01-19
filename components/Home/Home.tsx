@@ -1,3 +1,4 @@
+/* eslint-disable padding-line-between-statements */
 /* eslint-disable prettier/prettier */
 "use client";
 
@@ -17,8 +18,10 @@ const Home = () => {
   const [currentUsers, setCurrentUsers] = useState<string[]>([]);
 
   useEffect(() => {
-    // Check if there is a list of current users in the localStorage
-    const storedUsers = JSON.parse(localStorage.getItem("currentUsers") || "[]");
+    // Check if there is a list of current users in the sessionStorage
+    const storedUsers = JSON.parse(
+      sessionStorage.getItem("currentUsers") || "[]"
+    );
     setCurrentUsers(storedUsers);
   }, []);
 
@@ -44,11 +47,11 @@ const Home = () => {
     const updatedUsers = [...currentUsers, name];
     setCurrentUsers(updatedUsers);
 
-    // Save user name and room data to localStorage
-    localStorage.setItem("username", name);
-    localStorage.setItem("roomTimer", timer);
-    localStorage.setItem("selectedQuizzes", JSON.stringify(selectedQuizzes));
-    localStorage.setItem("currentUsers", JSON.stringify(updatedUsers));
+    // Save user name and room data to sessionStorage
+    sessionStorage.setItem("username", name);
+    sessionStorage.setItem("roomTimer", timer);
+    sessionStorage.setItem("selectedQuizzes", JSON.stringify(selectedQuizzes));
+    sessionStorage.setItem("currentUsers", JSON.stringify(updatedUsers));
 
     // Navigate to the room page
     window.location.href = "/room";
@@ -70,10 +73,10 @@ const Home = () => {
     const updatedUsers = [...currentUsers, name];
     setCurrentUsers(updatedUsers);
 
-    // Save user name, room code, and updated users list to localStorage
-    localStorage.setItem("username", name);
-    localStorage.setItem("roomCode", roomCode);
-    localStorage.setItem("currentUsers", JSON.stringify(updatedUsers));
+    // Save user name, room code, and updated users list to sessionStorage
+    sessionStorage.setItem("username", name);
+    sessionStorage.setItem("roomCode", roomCode);
+    sessionStorage.setItem("currentUsers", JSON.stringify(updatedUsers));
 
     // Navigate to the room page
     window.location.href = "/room";
@@ -142,7 +145,7 @@ const Home = () => {
                 return;
               }
               // Pass the first selected quiz as the category
-              localStorage.setItem("quizCategory", selectedQuizzes[0]);
+              sessionStorage.setItem("quizCategory", selectedQuizzes[0]);
               handleCreateRoom();
             }}
           >
