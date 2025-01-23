@@ -1,14 +1,14 @@
 /* eslint-disable prettier/prettier */
 
-import Home from "@/components/Home/Home";
+import Banner from "@/components/Home/Banner";
 
 
 const HomePage = () => {
-    return (
-        <div>
-           <Home/>
-        </div>
-    );
+  return (
+    <div>
+     <Banner/>
+    </div>
+  );
 };
 
 export default HomePage;

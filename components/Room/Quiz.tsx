@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 interface QuizProps {
-  quizCategory: string;
+  quizCategory: string[];
 }
 
 const mockQuizzes: Record<
@@ -59,27 +59,16 @@ const Quiz: React.FC<QuizProps> = ({ quizCategory }) => {
   >([]);
   const [quizCompleted, setQuizCompleted] = useState(false);
 
-  // useEffect(() => {
-  //   const storedTimer = sessionStorage.getItem("roomTimer") || "10";
-  //   const normalizedQuizCategory = quizCategory?.trim().toLowerCase();
-   
-  //   if (mockQuizzes[normalizedQuizCategory]) {
-  //     setQuizzes(mockQuizzes[normalizedQuizCategory]);
-  //   }
-
-  //   setTimer(parseInt(storedTimer, 10));
-  // }, [quizCategory]);
   useEffect(() => {
-    const storedTimer = sessionStorage.getItem("roomTimer") || "10";
+    const storedTimer = localStorage.getItem("roomTimer") || "10";
     const normalizedCategories = Array.isArray(quizCategory)
       ? quizCategory.map((category) => category.trim().toLowerCase())
       : [];
-  
+
     // Combine questions for all selected categories
     const mergedQuizzes = normalizedCategories.flatMap(
       (category) => mockQuizzes[category] || []
     );
-  
     setQuizzes(mergedQuizzes);
     setTimer(parseInt(storedTimer, 10));
   }, [quizCategory]);
@@ -103,10 +92,11 @@ const Quiz: React.FC<QuizProps> = ({ quizCategory }) => {
   };
 
   const handleNextQuestion = () => {
+    const storedTimer = localStorage.getItem("roomTimer") || "10";
     if (currentQuestion + 1 < quizzes.length) {
       setCurrentQuestion((prev) => prev + 1);
       setSelectedOption("");
-      setTimer(10);
+      setTimer(parseInt(storedTimer, 10));
     } else {
       setShowResult(true);
       setQuizCompleted(true);
@@ -134,7 +124,9 @@ const Quiz: React.FC<QuizProps> = ({ quizCategory }) => {
 
   return (
     <div className="p-4 max-w-lg mx-auto bg-gray-100 rounded-md shadow-md">
-       <div className="mt-2 text-center text-red-500">Time Left: {timer}s</div>
+      {!showResult && (
+        <div className="mt-2 text-center text-red-500">Time Left: {timer}s</div>
+      )}
       {/* <h1 className="text-xl font-bold mb-4 text-center">
         Quiz: {quizCategory}
       </h1> */}
@@ -192,7 +184,6 @@ const Quiz: React.FC<QuizProps> = ({ quizCategory }) => {
           <div className="mt-4 text-center text-gray-600">
             Question {currentQuestion + 1} of {quizzes.length}
           </div>
-         
         </div>
       )}
     </div>

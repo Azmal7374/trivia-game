@@ -25,12 +25,12 @@ const QuizRoom: React.FC<QuizRoomProps> = ({
   const [timer, setTimer] = useState("");
 
   useEffect(() => {
-    // Retrieve user and room data from sessionStorage
-    const storedName = sessionStorage.getItem("username") || "Unknown User";
+    // Retrieve user and room data from localStorage
+    const storedName = localStorage.getItem("username") || "Unknown User";
     // const storedQuizzes = JSON.parse(
-    //   sessionStorage.getItem("selectedQuizzes") || "[]"
+    //   localStorage.getItem("selectedQuizzes") || "[]"
     // );
-    const storedTimer = sessionStorage.getItem("roomTimer") || "No Timer Set";
+    const storedTimer = localStorage.getItem("roomTimer") || "No Timer Set";
 
     setUsername(storedName);
     // setRoomCode(storedRoomCode);
